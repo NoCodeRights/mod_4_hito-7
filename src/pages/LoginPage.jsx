@@ -26,7 +26,8 @@ const LoginPage = () => {
           icon: "success",
           confirmButtonText: "Cerrar",
         });
-        navigate("/Profile");
+        return(true);
+        navigate("/Profile")
       } else {
         Swal.fire({
           title: "Error!",

@@ -8,11 +8,12 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import Cart from "./pages/Cart";
 import Pizza from "./pages/Pizza";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { CartProvider } from "./context/CartContext";
 import { AuthContext } from "./context/AuthContext";
+import Logout from "./pages/Logout";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -24,15 +25,22 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/loginpage"
+              element={token ? <Navigate to="/" /> : <LoginPage />}
+            />
+            <Route
+              path="/registerpage"
+              element={token ? <Navigate to="/" /> : <RegisterPage />}
+            />
             <Route path="/cart" element={<Cart />} />
             <Route path="/pizza/:pizza_id" element={<Pizza />} />
             <Route
               path="/profile"
-              element={token ? <Profile /> : <Navigate to ="/login" />}
+              element={token ? <Profile /> : <Navigate to="/loginpage" />}
             />
             <Route path="/Pizza/:pizza_id" element={<Pizza />} />
+            <Route path="/logout" element={token ? <Navigate to="/" /> : <Logout />}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
